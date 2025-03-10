@@ -1,17 +1,24 @@
 import React, { useState } from 'react';
 
 const App: React.FC = () => {
-  const [count, setCount] = useState(0);
+  // State to keep track of the counter
+  const [count, setCount] = useState<number>(0);
 
-  const increment = () => {
-    setCount(count + 1);
-  };
+  // Function to increment the counter
+  const increment = () => setCount(count + 1);
+
+  // Function to decrement the counter
+  const decrement = () => setCount(count - 1);
 
   return (
-    <div style={{ textAlign: 'center', padding: '50px' }}>
-      <h1> Hello, World!</h1>
-      <p>Count: {count}</p>
-      <button onClick={increment}>Increment </button>
+    <div style={{ textAlign: 'center', marginTop: '50px' }}>
+      <h1>Counter: {count}</h1>
+      <button onClick={increment} style={{ margin: '10px', padding: '10px' }}>
+        Increment
+      </button>
+      <button onClick={decrement} style={{ margin: '10px', padding: '10px' }}>
+        Decrement
+      </button>
     </div>
   );
 };
