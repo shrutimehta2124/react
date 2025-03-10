@@ -9,6 +9,21 @@
       "id": "4541",
       "username": "shruti",
       "email": "shruti@gmail.com"
+    },
+    {
+      "id": "e8cc",
+      "name": "Neha",
+      "email": " neha@gmail.com"
+    },
+    {
+      "id": "c6f1",
+      "username": "pooja_mehta",
+      "firstname": "pooja",
+      "lastname": "mehta",
+      "email": "pooja@gmail.com",
+      "password": "Pooja@123",
+      "gender": "female",
+      "dob": "2007-07-10"
     }
   ]
 }

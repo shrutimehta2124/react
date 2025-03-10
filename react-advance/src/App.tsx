@@ -1,14 +1,14 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React from 'react';
+import { Provider } from 'react-redux';
+import store from './store/store';
 import UserForm from './components/UserForm';
 
-function App() {
+const App: React.FC = () => {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<UserForm />} />
-      </Routes>
-    </Router>
+    <Provider store={store}>
+      <UserForm />
+    </Provider>
   );
-}
+};
 
 export default App;
