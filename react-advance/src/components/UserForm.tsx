@@ -6,7 +6,11 @@ import { useDispatch } from 'react-redux';
 import { addUser } from '../store/slices/userSlice';
 import '../styles/UserForm.css';
 
-const UserForm: React.FC = () => {
+interface UserFormProps {
+  setShowLogin: (value: boolean) => void; // Accept setShowLogin as a prop
+}
+
+const UserForm: React.FC<UserFormProps> = ({ setShowLogin }) => {
   const dispatch = useDispatch();
 
   const formik = useFormik({
@@ -40,54 +44,49 @@ const UserForm: React.FC = () => {
   });
 
   return (
-    <div id="user-form-wrapper">
-      <div id="user-form-container">
-        <h2>Register</h2>
-        <form id="user-form" onSubmit={formik.handleSubmit}>
-          <input
-            type="text"
-            name="name"
-            className="form-input"
-            placeholder="Enter name"
-            onChange={formik.handleChange}
-            value={formik.values.name}
-          />
-          {formik.touched.name && formik.errors.name && (
-            <div className="error-text">{formik.errors.name}</div>
-          )}
+    <form className="user-form" onSubmit={formik.handleSubmit}>
+      <input
+        type="text"
+        name="name"
+        placeholder="Enter name"
+        onChange={formik.handleChange}
+        value={formik.values.name}
+      />
+      {formik.touched.name && formik.errors.name && (
+        <div className="error">{formik.errors.name}</div>
+      )}
 
-          <input
-            type="email"
-            name="email"
-            className="form-input"
-            placeholder="Enter email"
-            onChange={formik.handleChange}
-            value={formik.values.email}
-          />
-          {formik.touched.email && formik.errors.email && (
-            <div className="error-text">{formik.errors.email}</div>
-          )}
+      <input
+        type="email"
+        name="email"
+        placeholder="Enter email"
+        onChange={formik.handleChange}
+        value={formik.values.email}
+      />
+      {formik.touched.email && formik.errors.email && (
+        <div className="error">{formik.errors.email}</div>
+      )}
 
-          <input
-            type="file"
-            name="file"
-            className="form-input"
-            onChange={(event) => {
-              if (event.currentTarget.files) {
-                formik.setFieldValue('file', event.currentTarget.files[0]);
-              }
-            }}
-          />
-          {formik.touched.file && formik.errors.file && (
-            <div className="error-text">{formik.errors.file}</div>
-          )}
+      <input
+        type="file"
+        name="file"
+        onChange={(event) => {
+          if (event.currentTarget.files) {
+            formik.setFieldValue('file', event.currentTarget.files[0]);
+          }
+        }}
+      />
+      {formik.touched.file && formik.errors.file && (
+        <div className="error">{formik.errors.file}</div>
+      )}
 
-          <button type="submit" id="submit-btn">
-            Submit
-          </button>
-        </form>
-      </div>
-    </div>
+      <button type="submit">Submit</button>
+
+      {/* ✅ Add this button to switch to Login */}
+      <button type="button" onClick={() => setShowLogin(true)}>
+        Already have an account? Login
+      </button>
+    </form>
   );
 };
 

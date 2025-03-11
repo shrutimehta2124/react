@@ -7,15 +7,21 @@ const FormContainer: React.FC = () => {
   const [showLogin, setShowLogin] = useState(false);
 
   return (
-    <div id="form-container">
-      <div id="form-box">
-        <h2>{showLogin ? 'Login' : 'User Registration'}</h2>
-        {showLogin ? <LoginForm /> : <UserForm />}
-
-        <button id="toggle-form-btn" onClick={() => setShowLogin(!showLogin)}>
-          {showLogin ? 'Back to Registration' : 'Go to Login'}
-        </button>
-      </div>
+    <div className="form-container">
+      {!showLogin ? (
+        <>
+          <h2>User Registration</h2>
+          <UserForm setShowLogin={setShowLogin} /> {/* Pass setShowLogin */}
+        </>
+      ) : (
+        <>
+          <h2>Login</h2>
+          <LoginForm />
+          <button onClick={() => setShowLogin(false)}>
+            Back to Registration
+          </button>
+        </>
+      )}
     </div>
   );
 };
