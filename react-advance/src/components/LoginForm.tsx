@@ -1,6 +1,7 @@
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import '../styles/LoginForm.css';
 
 const LoginForm: React.FC = () => {
   const initialValues = {
@@ -21,27 +22,38 @@ const LoginForm: React.FC = () => {
   };
 
   return (
-    <Formik
-      initialValues={initialValues}
-      validationSchema={validationSchema}
-      onSubmit={onSubmit}
-    >
-      <Form>
-        <div>
-          <label>Email:</label>
-          <Field type="email" name="email" />
-          <ErrorMessage name="email" component="p" />
-        </div>
+    <div id="login-form-wrapper">
+      <div id="login-form-container">
+        <h2>Login</h2>
+        <Formik
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={onSubmit}
+        >
+          <Form id="login-form">
+            <div className="input-group">
+              <label>Email:</label>
+              <Field type="email" name="email" className="form-input" />
+              <ErrorMessage name="email" component="p" className="error-text" />
+            </div>
 
-        <div>
-          <label>Password:</label>
-          <Field type="password" name="password" />
-          <ErrorMessage name="password" component="p" />
-        </div>
+            <div className="input-group">
+              <label>Password:</label>
+              <Field type="password" name="password" className="form-input" />
+              <ErrorMessage
+                name="password"
+                component="p"
+                className="error-text"
+              />
+            </div>
 
-        <button type="submit">Login</button>
-      </Form>
-    </Formik>
+            <button type="submit" id="login-btn">
+              Login
+            </button>
+          </Form>
+        </Formik>
+      </div>
+    </div>
   );
 };
 
