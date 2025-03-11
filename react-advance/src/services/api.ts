@@ -1,7 +1,13 @@
 import axios from 'axios';
 
-const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL, // Fetch from .env file
-});
+const API_URL = 'http://localhost:5000/users'; // JSON Server URL
 
-export default api;
+export const addUserToAPI = async (userData: any) => {
+  try {
+    const response = await axios.post(API_URL, userData);
+    return response.data;
+  } catch (error) {
+    console.error('Error adding user:', error);
+    throw error;
+  }
+};

@@ -1,6 +1,5 @@
-export const emailPattern = /\S+@\S+\.\S+/;
-export const passwordPattern =
-  /^(?=.*[A-Z])(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,}$/;
+export const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+export const passwordPattern = /^(?=.*[A-Z])(?=.*[!@#$%^&*]).{6,}$/;
 
 export const isAdult = (dob: string) => {
   const birthDate = new Date(dob);

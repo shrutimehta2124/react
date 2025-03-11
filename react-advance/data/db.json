@@ -24,6 +24,18 @@
       "password": "Pooja@123",
       "gender": "female",
       "dob": "2007-07-10"
+    },
+    {
+      "id": "bfaf",
+      "username": "xyz",
+      "email": "xyz@gmail.com",
+      "password": "Xyx@123"
+    },
+    {
+      "id": "b455",
+      "username": "asdf",
+      "email": "asd@gmail.com",
+      "password": "Avc@123"
     }
   ]
 }
