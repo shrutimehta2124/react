@@ -1,95 +1,82 @@
-import React, { useState } from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../store/store';
-import { addUser } from '../store/slices/userSlice';
+import React from 'react';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 import { addUserToAPI } from '../services/api';
-import { emailPattern, passwordPattern, isAdult } from '../utils/validations';
-import LoginForm from './LoginForm'; // Import LoginForm
-
-interface FormValues {
-  username: string;
-  firstname: string;
-  lastname?: string;
-  email: string;
-  password: string;
-  gender?: string;
-  dob?: string;
-}
+import { useDispatch } from 'react-redux';
+import { addUser } from '../store/slices/userSlice';
 
 const UserForm: React.FC = () => {
-  const [showLogin, setShowLogin] = useState(false); // State to toggle form
+  const dispatch = useDispatch();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormValues>();
-  const dispatch = useDispatch<AppDispatch>();
+  const formik = useFormik({
+    initialValues: {
+      name: '',
+      email: '',
+      file: null as File | null,
+    },
+    validationSchema: Yup.object({
+      name: Yup.string().required('Name is required'),
+      email: Yup.string().email('Invalid email').required('Email is required'),
+      file: Yup.mixed().required('File is required'),
+    }),
+    onSubmit: async (values) => {
+      try {
+        const formData = new FormData();
+        formData.append('name', values.name);
+        formData.append('email', values.email);
+        if (values.file) {
+          formData.append('file', values.file);
+        }
 
-  const onSubmit: SubmitHandler<FormValues> = async (data) => {
-    try {
-      await addUserToAPI(data);
-      dispatch(addUser(data));
-      alert('User added successfully!');
-    } catch (error) {
-      alert('Failed to add user');
-    }
-  };
+        const user = await addUserToAPI(formData);
+        dispatch(addUser(user));
+
+        alert('User added successfully!');
+      } catch (error) {
+        alert('Failed to add user');
+      }
+    },
+  });
 
   return (
-    <div>
-      {showLogin ? (
-        <LoginForm />
-      ) : (
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div>
-            <label>Username:</label>
-            <input
-              {...register('username', { required: 'Username is required' })}
-            />
-            {errors.username && <p>{errors.username.message}</p>}
-          </div>
-
-          <div>
-            <label>Email:</label>
-            <input
-              {...register('email', {
-                required: 'Email is required',
-                pattern: {
-                  value: emailPattern,
-                  message: 'Invalid email format',
-                },
-              })}
-            />
-            {errors.email && <p>{errors.email.message}</p>}
-          </div>
-
-          <div>
-            <label>Password:</label>
-            <input
-              type="password"
-              {...register('password', {
-                required: 'Password is required',
-                pattern: {
-                  value: passwordPattern,
-                  message:
-                    'Password must contain 1 uppercase, 1 special character, and be at least 6 characters long',
-                },
-              })}
-            />
-            {errors.password && <p>{errors.password.message}</p>}
-          </div>
-
-          <button type="submit">Submit</button>
-        </form>
+    <form onSubmit={formik.handleSubmit}>
+      <input
+        type="text"
+        name="name"
+        placeholder="Enter name"
+        onChange={formik.handleChange}
+        value={formik.values.name}
+      />
+      {formik.touched.name && formik.errors.name && (
+        <div>{formik.errors.name}</div>
       )}
 
-      {/* Button to toggle between UserForm and LoginForm */}
-      <button onClick={() => setShowLogin((prev) => !prev)}>
-        {showLogin ? 'Go to Registration' : 'Go to Login'}
-      </button>
-    </div>
+      <input
+        type="email"
+        name="email"
+        placeholder="Enter email"
+        onChange={formik.handleChange}
+        value={formik.values.email}
+      />
+      {formik.touched.email && formik.errors.email && (
+        <div>{formik.errors.email}</div>
+      )}
+
+      <input
+        type="file"
+        name="file"
+        onChange={(event) => {
+          if (event.currentTarget.files) {
+            formik.setFieldValue('file', event.currentTarget.files[0]);
+          }
+        }}
+      />
+      {formik.touched.file && formik.errors.file && (
+        <div>{formik.errors.file}</div>
+      )}
+
+      <button type="submit">Submit</button>
+    </form>
   );
 };
 

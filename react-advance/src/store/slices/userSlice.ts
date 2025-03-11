@@ -1,18 +1,22 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface UserState {
-  users: any[];
+interface User {
+  name: string;
+  email: string;
+  file: File | null;
 }
 
-const initialState: UserState = {
-  users: [],
-};
+interface UserState {
+  users: User[];
+}
+
+const initialState: UserState = { users: [] };
 
 const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    addUser: (state, action: PayloadAction<any>) => {
+    addUser: (state, action: PayloadAction<User>) => {
       state.users.push(action.payload);
     },
   },

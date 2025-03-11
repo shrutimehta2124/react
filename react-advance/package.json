@@ -10,7 +10,7 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
     "format": "prettier --write .",
-    "server": "json-server --watch data/db.json --port 5000"
+    "server": "json-server --watch data/db.json --port 3000"
   },
   "dependencies": {
     "@hookform/resolvers": "^4.1.3",
