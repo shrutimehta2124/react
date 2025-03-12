@@ -1,0 +1,21 @@
+{
+  "users": [
+    {
+      "id": "1e76",
+      "username": "megha ",
+      "email": "megha@gamil.com"
+    }
+  ],
+  "articles": [
+    {
+      "id": "1",
+      "title": "React with TypeScript",
+      "content": "React with TypeScript tutorial."
+    },
+    {
+      "id": "2",
+      "title": "Redux Toolkit",
+      "content": "Redux Toolkit simplifies state management."
+    }
+  ]
+}
